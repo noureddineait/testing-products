@@ -59,10 +59,8 @@ export default async function IndexPage() {
 						Hand-picked items — updated automatically from Sanity.
 					</p>
 				</div>
-				{/* (Optional) Filters/Search can live here later */}
 			</div>
 
-			{/* Grid */}
 			<ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{posts.map((p) => (
 					<li key={p._id}>
@@ -70,8 +68,7 @@ export default async function IndexPage() {
 							href={`/${p.slug.current}`}
 							className="group block overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition hover:shadow-lg"
 						>
-							{/* Thumb */}
-							<div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100">
+							<div className="relative aspect-4/3 w-full overflow-hidden bg-linear-to-br from-neutral-50 to-neutral-100">
 								{p.thumbUrl ? (
 									<Image
 										src={p.thumbUrl}
@@ -87,7 +84,6 @@ export default async function IndexPage() {
 									</div>
 								)}
 
-								{/* Badges */}
 								<div className="pointer-events-none absolute left-3 top-3 flex gap-2">
 									{p.has3d && (
 										<span className="rounded-full bg-black/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur">
@@ -106,7 +102,6 @@ export default async function IndexPage() {
 								</div>
 							</div>
 
-							{/* Meta */}
 							<div className="space-y-1 p-4">
 								<h2 className="line-clamp-1 text-base font-semibold leading-6">
 									{p.title}
@@ -128,7 +123,6 @@ export default async function IndexPage() {
 								</div>
 							</div>
 
-							{/* Hover underline */}
 							<div className="h-1 w-0 bg-black transition-all duration-300 group-hover:w-full" />
 						</Link>
 					</li>

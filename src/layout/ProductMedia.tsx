@@ -57,9 +57,12 @@ export default function ProductCarousel({
 
 	// swipe
 	const startX = useRef<number | null>(null);
-	const onTouchStart = (e: React.TouchEvent) =>
-		(startX.current = e.touches[0].clientX);
+	const onTouchStart = (e: React.TouchEvent) => {
+		if (slides[i].type === "3d") return;
+		startX.current = e.touches[0].clientX;
+	};
 	const onTouchEnd = (e: React.TouchEvent) => {
+		if (slides[i].type === "3d") return;
 		if (startX.current == null) return;
 		const dx = e.changedTouches[0].clientX - startX.current;
 		if (Math.abs(dx) > 40) dx > 0 ? prev() : next();
@@ -78,7 +81,6 @@ export default function ProductCarousel({
 				.filter(Boolean)
 				.join(" ")}
 		>
-			{/* Stage */}
 			<div
 				className="relative aspect-square w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50"
 				onTouchStart={onTouchStart}
@@ -105,7 +107,6 @@ export default function ProductCarousel({
 				)}
 			</div>
 
-			{/* Arrows */}
 			{slides.length > 1 && (
 				<>
 					<button
@@ -125,7 +126,6 @@ export default function ProductCarousel({
 				</>
 			)}
 
-			{/* Dots */}
 			{slides.length > 1 && (
 				<div className="mt-3 flex justify-center gap-2">
 					{slides.map((_, idx) => (
