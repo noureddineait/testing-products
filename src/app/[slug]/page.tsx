@@ -79,9 +79,9 @@ export default async function PostPage({
 		null;
 
 	const gallery: string[] = Array.isArray(post.gallery)
-		? post.gallery
-				.map((g: Any) => g?.asset?.url as string | undefined)
-				.filter(Boolean)
+		? (post.gallery
+				.map((g: Any) => g?.asset?.url)
+				.filter((u): u is string => Boolean(u)) as string[])
 		: [];
 
 	const glbUrl: string | "" =

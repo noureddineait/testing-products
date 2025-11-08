@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import ModelViewer from "@/layout/ModelViewer"; // your client wrapper (loads @google/model-viewer in useEffect)
+import { Any } from "next-sanity";
 
 type Slide =
 	| { type: "3d"; src: string; ios?: string }
@@ -24,9 +25,17 @@ export default function ProductCarousel({
 	const slides: Slide[] = useMemo(
 		() => [
 			...(glbUrl
-				? [{ type: "3d", src: glbUrl, ios: usdzUrl || undefined }]
+				? [
+						{
+							type: "3d" as const,
+							src: glbUrl,
+							ios: usdzUrl || undefined,
+						},
+					]
 				: []),
-			...images.filter(Boolean).map((src) => ({ type: "img", src })),
+			...images
+				.filter(Boolean)
+				.map<Slide>((src) => ({ type: "img" as const, src })),
 		],
 		[glbUrl, usdzUrl, images]
 	);
@@ -77,17 +86,17 @@ export default function ProductCarousel({
 			>
 				{slides[i].type === "3d" ? (
 					<ModelViewer
-						key={(slides[i] as any).src}
-						src={(slides[i] as any).src}
-						iosSrc={(slides[i] as any).ios}
+						key={(slides[i] as Any).src}
+						src={(slides[i] as Any).src}
+						iosSrc={(slides[i] as Any).ios}
 						alt={`${title} 3D model`}
 						style={{ width: "100%", height: "100%" }}
 					/>
 				) : (
 					<Image
-						key={(slides[i] as any).src}
+						key={(slides[i] as Any).src}
 						alt={`${title} image ${i + 1}`}
-						src={(slides[i] as any).src}
+						src={(slides[i] as Any).src}
 						fill
 						sizes="(max-width:1024px) 100vw, 50vw"
 						className="object-cover"
